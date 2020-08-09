@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="signup-form">
+        <div>
+          <input id="email" type="text" placeholder="Email address" required />
+        </div>
+        <button id="email-submit" type="submit">
+          <span id="button-text">Sign up</span>
+        </button>
+    </form>
+    <script>
+        function createCustomer() {
+            let email = document.querySelector('#email').value;
+            return fetch('/create-customer', {
+                method: 'post',
+                headers: {
+                    'Content-Type':'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                })
+            })
+            .then((response) => {
+                return response.json();
+            })
+            .then((result) => {
+                return result;
+            })
+        }
+        
+        let signupForm = document.getElementById('signup-form');
+
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            createCustomer().then((result) => {
+                customer = result.customer;
+            })
+        })
+    </script>
+</body>
+</html>
